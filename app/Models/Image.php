@@ -35,6 +35,14 @@ class Image extends Model
     }
 
     /**
+     * Set UUID as the route model binding key.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'uuid';
+    }
+
+    /**
      * Get the columns that should receive a unique identifier.
      *
      * @return array<int, string>
