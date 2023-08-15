@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreImageRequest;
 use App\Http\Requests\UpdateImageRequest;
+use App\Http\Resources\ImageResource;
 use App\Models\Image;
 use App\Services\ImageService;
 
@@ -18,7 +19,7 @@ class ImageController extends Controller
      */
     public function index()
     {
-        //
+        return ImageResource::collection(Image::where('user_id', request()->user()->id)->get());
     }
 
     /**
@@ -36,7 +37,7 @@ class ImageController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Image $image)
+    public function show($filename)
     {
         //
     }

@@ -17,20 +17,19 @@ class ImageService
      */
     public function create(array $data): Image
     {
-        if(isset($data['file']) && $data['file'] instanceof UploadedFile) {
-            $filename = $this->storeImage($data['file']);
+        if(isset($data['image']) && $data['image'] instanceof UploadedFile) {
+            $filename = $this->storeImage($data['image']);
         } else {
             abort(500);
         }
-        $image = [
+
+        return Image::create([
             'user_id' => Auth::id(),
             'filename' => $filename,
             'title' => $data['title'],
             'description' => $data['description'],
-            'favourite' => $data['favourite'],
-        ];
-
-        return Image::create($image);
+            'favourite' => $data['favourite'] ?? false,
+        ]);
     }
 
     /**

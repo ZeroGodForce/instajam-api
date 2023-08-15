@@ -14,7 +14,11 @@ class Image extends Model
     use SoftDeletes;
     use HasUuids;
 
-    // The attributes that are mass assignable.
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'uuid',
         'user_id',
