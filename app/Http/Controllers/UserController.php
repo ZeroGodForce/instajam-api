@@ -24,14 +24,14 @@ class UserController extends Controller
     {
         $user = $this->userService->register($request->validated());
 
-        return (new UserLoginResource($user))
-            ->response()
-            ->setStatusCode(201);
+        return (new UserLoginResource($user))->response()->setStatusCode(201);
     }
 
     public function login(LoginRequest $request)
     {
-        return $this->userService->login($request->validated());
+        $user = $this->userService->login($request->validated());
+
+        return (new UserLoginResource($user))->response()->setStatusCode(201);
     }
 
     public function logout(LoginRequest $request)

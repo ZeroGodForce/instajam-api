@@ -25,11 +25,9 @@ class UserService
     public function login(array $credentials)
     {
         if (!auth()->attempt($credentials)) {
-            return response(['message' => 'Invalid credentials'], 401);
+            abort(404);
         }
 
-        $token = auth()->user()->createToken('InstaJam-app')->plainTextToken;
-
-        return response(['token' => $token], 200);
+        return auth()->user();
     }
 }
