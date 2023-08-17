@@ -29,8 +29,8 @@ Route::prefix('v1')->group(function () {
         ->middleware('guest')
         ->name('login');
 
-    Route::post('/logout', [UserController::class, ''])
-        ->middleware('auth')
+    Route::delete('/logout', [UserController::class, 'logout'])
+        ->middleware('auth:sanctum')
         ->name('logout');
 
     Route::middleware('auth:sanctum')->group(function () {
