@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateImageRequest;
 use App\Http\Resources\ImageResource;
 use App\Models\Image;
 use App\Services\ImageService;
+use Illuminate\Http\Request;
 
 class ImageController extends Controller
 {
@@ -19,7 +20,9 @@ class ImageController extends Controller
      */
     public function index()
     {
-        return ImageResource::collection(Image::where('user_id', request()->user()->id)->get());
+        $images = $this->imageService->browse(request()->user()->id);
+
+        return ImageResource::collection($images);
     }
 
     /**
@@ -73,10 +76,12 @@ class ImageController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Set the specified image's favourite status and then return a complete list of all image'.
      */
-    public function favourite(UpdateImageRequest $request, Image $image)
+    public function favourite(Request $request, Image $image)
     {
         $this->imageService->toggleFavourite($image, $request->all());
+
+        return ImageResource::collection($this->imageService->browse($request->user()->id));
     }
 }

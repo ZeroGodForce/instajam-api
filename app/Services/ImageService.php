@@ -83,7 +83,9 @@ class ImageService
      */
     public function toggleFavourite(Image $image, array $data): Image
     {
-        $image->update(['favourite' => (bool) $data['favourite']]);
+        if ($image['user_id'] === request()->user()->id) {
+            $image->update(['favourite' => (bool) $data['favourite']]);
+        }
 
         return $image;
     }
@@ -97,5 +99,10 @@ class ImageService
     protected function storeImage(UploadedFile $file): string
     {
         return Storage::disk('public')->putFile('photos', $file);
+    }
+
+    public function browse($id)
+    {
+        return Image::where('user_id', $id)->get();
     }
 }
