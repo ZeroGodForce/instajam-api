@@ -103,6 +103,18 @@ class ImageService
 
     public function browse($id)
     {
+        if (request('filter') === 'favourites') {
+            return $this->browseFavourites($id);
+        }
+
         return Image::where('user_id', $id)->get();
+    }
+
+    public function browseFavourites($id)
+    {
+        return Image::where([
+            ['user_id', $id],
+            ['favourite', true],
+        ])->get();
     }
 }
