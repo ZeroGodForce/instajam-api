@@ -40,7 +40,12 @@ class ImageController extends Controller
      */
     public function show($filename)
     {
-        //
+        $image = Image::where([
+            'filename' => $filename,
+            'user_id' => auth()->id(),
+        ]);
+
+        return new ImageResource($image);
     }
 
     /**
