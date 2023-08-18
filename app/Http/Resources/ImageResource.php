@@ -16,11 +16,11 @@ class ImageResource extends JsonResource
     {
         return [
             'uuid' => $this->uuid,
-            'filename' => url($this->filename),
+            'imagePath' => url($this->filename),
             'title' => $this->title,
             'description' => $this->description,
             'favourite' => (bool) $this->favourite,
-            'created_at' => $this->created_at,
+            'createdAt' => $this->created_at,
         ];
     }
 }
