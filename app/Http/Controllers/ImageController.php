@@ -26,12 +26,13 @@ class ImageController extends Controller
      * Store a newly created Image in storage.
      *
      * @param StoreImageRequest $request
-     * @return Image
-     * @todo RETURN DATA AS API RESOURCE
+     * @return ImageResource
      */
-    public function store(StoreImageRequest $request)
+    public function store(StoreImageRequest $request): ImageResource
     {
-        return $this->imageService->create($request->all());
+        $image = $this->imageService->create($request->all());
+
+        return new ImageResource($image);
     }
 
     /**
