@@ -20,6 +20,9 @@ class ImageResource extends JsonResource
             'title' => $this->title,
             'description' => $this->description,
             'favourite' => (bool) $this->favourite,
+            'height' => $this->height ?? null,
+            'width' => $this->width ?? null,
+            'filesize' => $this->filesize ?? null,
             'createdAt' => $this->created_at,
         ];
     }
