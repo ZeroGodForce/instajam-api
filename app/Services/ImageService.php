@@ -96,6 +96,6 @@ class ImageService
      */
     protected function storeImage(UploadedFile $file): string
     {
-        return Storage::disk('local')->putFile('photos', $file);
+        return Storage::disk('public')->putFile('photos', $file);
     }
 }
