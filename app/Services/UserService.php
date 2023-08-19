@@ -25,7 +25,7 @@ class UserService
     public function login(array $credentials)
     {
         if (!auth()->attempt($credentials)) {
-            abort(404);
+            return response()->json(['error' => 'Invalid login credentials'], 404);
         }
 
         return auth()->user();

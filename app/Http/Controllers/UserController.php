@@ -31,7 +31,7 @@ class UserController extends Controller
     {
         $user = $this->userService->login($request->validated());
 
-        return (new UserLoginResource($user))->response()->setStatusCode(201);
+        return (new UserLoginResource($user))->response();
     }
 
     public function logout()
