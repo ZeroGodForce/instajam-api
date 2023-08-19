@@ -1,66 +1,93 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# InstaJAM API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Introduction
+This is a backend API for a demo app that (more or less) is Instagram from scratch.
 
-## About Laravel
+It's built using Laravel.  There are very few frontend views.  Visiting the webroot will just show Laravel's default
+front page.  However, Laravel Telescope is installed and can be visited at `/telescope`.  Authentication is handled using
+Sanctum to manage tokens, and some basic user registration boilerplate inspired by Laravel Breeze's source code. 
+Note that this API must be up and running before attempting to run the mobile app as it's expecting to be able to talk 
+to the server
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+The basic functional overview consists of:
+- User registration and login
+- Image upload and metadata storage
+- Data stored in SQLite database (located in `/database/database.sqlite`)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
+The quickest way to get this API running (on a Mac at least) is to download and install (Laravel Herd)[https://herd.laravel.com]
+However if you would prefer to use Valet or Sail that should be fine too (though note that I have not tested either 
+directly) as there are no special modifications to be made to allow the application to run.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+If you're on Linux, you'll probably know what to do.  If you're on Windows, Sail is your best bet as I hear docker is 
+pretty decent on Windows these days.  Haven't tried it directly.
 
-## Learning Laravel
+Firstly, clone the repo, when done.  Open up the terminal, navigate inside and type the following
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```sh
+composer install
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+To install the framework, Once this has finished, duplicate the `.env.example` file - renaming it `.env`.
+Next, to set up the database file navigate to the database directory and create a new sqlite database
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```sh
+cd database
+touch database.sqlite
+```
 
-## Laravel Sponsors
+Inside the `.env`, set the `DB_DATABASE` path to be the absolute path to the SQLite file:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+```dotenv
+DB_DATABASE=/absolute/path/to/instajam-api/database/database.sqlite
+```
 
-### Premium Partners
+Next run: 
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+```sh
+php artisan key:generate
+``` 
 
-## Contributing
+to ensure the Laravel security key is set.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+NOTE: Some steps may differ from here on in if you are not using Herd or Valet.
 
-## Code of Conduct
+```sh
+herd link # OR valet link if you're using Valet
+``` 
+This will allow the server to be served up at the local url `http://instajam-api.test`. (or something
+similar based on the folder name chosen when cloning the repo).  You should add this to your `.env` file
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```dotenv
+APP_URL=http://instajam-api.test
+```
 
-## Security Vulnerabilities
+Finally you can run:
+```sh
+php artisan migrate
+php artisan telescope:install
+php artisan storage:link
+``` 
+You may also need to manually create a `photos` directory inside `/storage/app/public`
+```sh
+cd /storage/app/public
+mkdir photos
+``` 
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+To verify that the server is up and running, you should be able to visit `http://instajam-api.test/telescope` in your
+browser and see the telescope interface running.  If you do, you should be ready to go.
 
-## License
+### However...
+If you plan to test the app on android, you will need to take an additional step, which is to create a tunnel
+using Expose or Ngrok make the server available over the internet.  This is because, android is completely isolated from
+the host system - meaning, the only connection it can make to the localhost server is by using the IP 10.0.2.2.  
+But because the server is not running on localhost (unless you are using Sail), you will need to tunnel out, and 
+use Expose/Ngrok's HTTPS (NOT HTTP) url as the API_URL in the React Native app's `.env` file. 
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Known Issues
+A number of things either uncompleted or problems that may be noticable:
+- Form requests.  I have not put up any guards around the authorize method on form requests - this is simply due to time constraints.
+- Data sanitisation.  While there isn't much data coming in, setting up sanitisers is a nontrivial process, and would be overkill for the current featureset
+- 
+- 
