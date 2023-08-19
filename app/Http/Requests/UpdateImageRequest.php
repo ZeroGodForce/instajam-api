@@ -10,7 +10,6 @@ class UpdateImageRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      *
-     * @todo CONTROL BY GATE OR POLICY
      */
     public function authorize(): bool
     {
