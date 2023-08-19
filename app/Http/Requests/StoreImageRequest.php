@@ -9,6 +9,7 @@ class StoreImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
      * @todo CONTROL BY GATE OR POLICY
      */
     public function authorize(): bool
@@ -27,7 +28,7 @@ class StoreImageRequest extends FormRequest
             'image' => 'required|image|mimes:jpg,jpeg,png,bmp,gif,svg,webp',
             'title' => 'nullable|string',
             'description' => 'nullable|string',
-            'favourite' => 'sometimes|boolean'
+            'favourite' => 'sometimes|boolean',
         ];
     }
 
@@ -44,7 +45,7 @@ class StoreImageRequest extends FormRequest
             'image.mimes' => 'The image must be a type of: PNG, JPEG, JPG, GIF, SVG, OR WEBP.',
             'title.string' => 'The title must be a string.',
             'description.string' => 'The description must be a string.',
-            'favourite.boolean' => 'Favourite status must be true or false.'
+            'favourite.boolean' => 'Favourite status must be true or false.',
         ];
     }
 }

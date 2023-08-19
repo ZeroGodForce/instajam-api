@@ -5,16 +5,13 @@ namespace App\Services;
 use App\Models\Image;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ImageService
 {
     /**
      * Create a new image.
-     *
-     * @param array $data
-     * @return Image|JsonResponse
      */
     public function create(array $data): JsonResponse|Image
     {
@@ -24,8 +21,9 @@ class ImageService
             return response()->json(['error' => 'Invalid image file'], 500);
         }
 
-        $absoluteFilePath = storage_path('app/public/' . $filename);
+        $absoluteFilePath = storage_path('app/public/'.$filename);
         $imageStats = getimagesize($absoluteFilePath);
+
         return Image::create([
             'user_id' => Auth::id(),
             'filename' => $filename,
@@ -40,10 +38,6 @@ class ImageService
 
     /**
      * Update an existing image.
-     *
-     * @param Image $image
-     * @param array $data
-     * @return Image
      */
     public function update(Image $image, array $data): Image
     {
@@ -60,9 +54,6 @@ class ImageService
 
     /**
      * Soft delete an image.
-     *
-     * @param Image $image
-     * @return void
      */
     public function delete(Image $image): void
     {
@@ -71,9 +62,6 @@ class ImageService
 
     /**
      * Force delete an image.
-     *
-     * @param Image $image
-     * @return void
      */
     public function forceDelete(Image $image): void
     {
@@ -82,10 +70,6 @@ class ImageService
 
     /**
      * Toggle an image as favourite.
-     *
-     * @param Image $image
-     * @param array $data
-     * @return Image
      */
     public function toggleFavourite(Image $image, array $data): Image
     {
@@ -98,9 +82,6 @@ class ImageService
 
     /**
      * Store the image and return its filename.
-     *
-     * @param UploadedFile $file
-     * @return string
      */
     protected function storeImage(UploadedFile $file): string
     {

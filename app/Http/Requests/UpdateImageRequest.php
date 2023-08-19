@@ -9,6 +9,7 @@ class UpdateImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
+     *
      * @todo CONTROL BY GATE OR POLICY
      */
     public function authorize(): bool
@@ -26,7 +27,7 @@ class UpdateImageRequest extends FormRequest
         return [
             'title' => 'nullable|string',
             'description' => 'nullable|string',
-            'favourite' => 'sometimes|boolean'
+            'favourite' => 'sometimes|boolean',
         ];
     }
 
@@ -40,7 +41,7 @@ class UpdateImageRequest extends FormRequest
         return [
             'title.string' => 'The title must be a string.',
             'description.string' => 'The description must be a string.',
-            'favourite.boolean' => 'Favourite status must be true or false.'
+            'favourite.boolean' => 'Favourite status must be true or false.',
         ];
     }
 }

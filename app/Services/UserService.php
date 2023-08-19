@@ -9,9 +9,6 @@ class UserService
 {
     /**
      * Create a new user and return the record
-     *
-     * @param array $data
-     * @return User
      */
     public function register(array $data): User
     {
@@ -24,7 +21,7 @@ class UserService
 
     public function login(array $credentials)
     {
-        if (!auth()->attempt($credentials)) {
+        if (! auth()->attempt($credentials)) {
             return response()->json(['error' => 'Invalid login credentials'], 404);
         }
 

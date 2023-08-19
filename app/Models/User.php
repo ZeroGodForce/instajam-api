@@ -49,8 +49,6 @@ class User extends Authenticatable
 
     /**
      * Return Image models for this User
-     *
-     * @return HasMany
      */
     public function images(): HasMany
     {

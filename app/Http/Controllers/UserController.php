@@ -12,13 +12,12 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function __construct(protected UserService $userService) {}
+    public function __construct(protected UserService $userService)
+    {
+    }
 
     /**
      * Register a new user
-     *
-     * @param RegisterRequest $request
-     * @return JsonResponse
      */
     public function register(RegisterRequest $request): JsonResponse
     {

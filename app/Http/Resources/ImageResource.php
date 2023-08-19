@@ -22,7 +22,7 @@ class ImageResource extends JsonResource
             'favourite' => (bool) $this->favourite,
             'height' => $this->height ?? null,
             'width' => $this->width ?? null,
-            'filesize' => round($this->filesize / 1024, 2) . 'KB' ?? null,
+            'filesize' => round($this->filesize / 1024, 2).'KB' ?? null,
             'createdAt' => $this->created_at->toDayDateTimeString(),
         ];
     }

@@ -27,9 +27,6 @@ class ImageController extends Controller
 
     /**
      * Store a newly created Image in storage.
-     *
-     * @param StoreImageRequest $request
-     * @return ImageResource
      */
     public function store(StoreImageRequest $request): ImageResource
     {
