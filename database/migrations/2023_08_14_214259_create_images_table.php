@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->boolean('favourite')->default(false);
+            $table->integer('height')->nullable();
+            $table->integer('width')->nullable();
+            $table->integer('filesize')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

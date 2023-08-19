@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Image;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -11,24 +12,29 @@ class ImageService
 {
     /**
      * Create a new image.
-     * @todo HANDLE IMAGE UPLOAD FAILURE
+     *
      * @param array $data
-     * @return Image
+     * @return Image|JsonResponse
      */
-    public function create(array $data): Image
+    public function create(array $data): JsonResponse|Image
     {
-        if(isset($data['image']) && $data['image'] instanceof UploadedFile) {
+        if (isset($data['image']) && $data['image'] instanceof UploadedFile) {
             $filename = $this->storeImage($data['image']);
         } else {
-            abort(500);
+            return response()->json(['error' => 'Invalid image file'], 500);
         }
 
+        $absoluteFilePath = storage_path('app/public/' . $filename);
+        $imageStats = getimagesize($absoluteFilePath);
         return Image::create([
             'user_id' => Auth::id(),
             'filename' => $filename,
             'title' => $data['title'],
             'description' => $data['description'],
             'favourite' => $data['favourite'] ?? false,
+            'height' => $imageStats[1] ?? null,
+            'width' => $imageStats[0] ?? null,
+            'filesize' => (int) filesize($absoluteFilePath) ?? null,
         ]);
     }
 

@@ -26,6 +26,9 @@ class Image extends Model
         'title',
         'description',
         'favourite',
+        'height',
+        'width',
+        'filesize',
     ];
 
     /**
