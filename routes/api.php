@@ -39,9 +39,6 @@ Route::prefix('v1')->group(function () {
             Route::get('/{image}', [ImageController::class, 'show']);
             Route::post('/', [ImageController::class, 'store']);
             Route::put('/{image}/favourite', [ImageController::class, 'favourite']);
-            Route::put('/{image}', [ImageController::class, 'update']);
-            Route::delete('/{image}', [ImageController::class, 'destroy']);
-            Route::delete('/{image}/force', [ImageController::class, 'forceDestroy']);
         });
     });
 });

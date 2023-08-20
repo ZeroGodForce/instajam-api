@@ -37,38 +37,6 @@ class ImageService
     }
 
     /**
-     * Update an existing image.
-     */
-    public function update(Image $image, array $data): Image
-    {
-        $update = [
-            'title' => $data['title'],
-            'description' => $data['description'],
-            'favourite' => $data['favourite'],
-        ];
-
-        $image->update($update);
-
-        return $image;
-    }
-
-    /**
-     * Soft delete an image.
-     */
-    public function delete(Image $image): void
-    {
-        $image->delete();
-    }
-
-    /**
-     * Force delete an image.
-     */
-    public function forceDelete(Image $image): void
-    {
-        $image->forceDelete();
-    }
-
-    /**
      * Toggle an image as favourite.
      */
     public function toggleFavourite(Image $image, array $data): Image
@@ -88,6 +56,9 @@ class ImageService
         return Storage::disk('public')->putFile('photos', $file);
     }
 
+    /**
+     * Return a list of all images for this user
+     */
     public function browse($id)
     {
         if (request('filter') === 'favourites') {
@@ -97,6 +68,9 @@ class ImageService
         return Image::where('user_id', $id)->get();
     }
 
+    /**
+     * Return a list of all favourite images for this user
+     */
     public function browseFavourites($id)
     {
         return Image::where([

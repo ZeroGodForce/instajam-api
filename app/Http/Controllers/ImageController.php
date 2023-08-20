@@ -16,7 +16,7 @@ class ImageController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * List all images for this user.
      */
     public function index()
     {
@@ -36,7 +36,7 @@ class ImageController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified Image.
      */
     public function show($filename)
     {
@@ -46,30 +46,6 @@ class ImageController extends Controller
         ]);
 
         return new ImageResource($image);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateImageRequest $request, Image $image)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Image $image)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function forceDestroy(Image $image)
-    {
-        //
     }
 
     /**
