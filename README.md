@@ -89,5 +89,5 @@ use Expose/Ngrok's HTTPS (NOT HTTP) url as the API_URL in the React Native app's
 A number of things either uncompleted or problems that may be noticable:
 - Form requests.  I have not put up any guards around the authorize method on form requests - this is simply due to time constraints.
 - Data sanitisation.  While there isn't much data coming in, setting up sanitisers is a nontrivial process, and would be overkill for the current featureset
-- 
-- 
+- User management: Using fortify to handle this might have been a better route than rolling my own.  However, Fortify can sometimes be difficult to work with in a hurry. Any re-implementation or refactoring of user related management, I'll likely take that route
+- Protected photo routes.  For speed I had to serve all uploaded photos from the public folder, which means anyone with the URL can view.  Ideally this should be restricted by user and require a token, but it is fiddly to set up.  May do so later
