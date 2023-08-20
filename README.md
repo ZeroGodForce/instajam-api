@@ -14,6 +14,10 @@ The basic functional overview consists of:
 - Image upload and metadata storage
 - Data stored in SQLite database (located in `/database/database.sqlite`)
 
+Additionally, a postman collection and environment file are included in the project root:
+- InstaJam API.postman_collection.json
+- InstaJam API.postman_environment.json
+
 ## Installation
 The quickest way to get this API running (on a Mac at least) is to download and install (Laravel Herd)[https://herd.laravel.com]
 However if you would prefer to use Valet or Sail that should be fine too (though note that I have not tested either 
