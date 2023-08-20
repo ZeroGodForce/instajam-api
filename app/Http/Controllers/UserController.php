@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\UserLoginResource;
-use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UserController extends Controller
 {
@@ -26,57 +25,27 @@ class UserController extends Controller
         return (new UserLoginResource($user))->response()->setStatusCode(201);
     }
 
-    public function login(LoginRequest $request)
+    /**
+     * Login user
+     */
+    public function login(LoginRequest $request): JsonResponse
     {
         $user = $this->userService->login($request->validated());
+
+        if (!$user) {
+            return response()->json(['error' => 'Invalid login credentials'], 404);
+        }
 
         return (new UserLoginResource($user))->response();
     }
 
-    public function logout()
+    /**
+     * Destroy token and logout user
+     */
+    public function logout(): Response
     {
         request()->user()->currentAccessToken()->delete();
 
         return response()->noContent();
-    }
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, User $user)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //
     }
 }

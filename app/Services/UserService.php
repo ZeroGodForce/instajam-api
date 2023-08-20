@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\User;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
@@ -19,10 +20,13 @@ class UserService
         ]);
     }
 
-    public function login(array $credentials)
+    /**
+     * Check credentials and return the matching user if exists
+     */
+    public function login(array $credentials): bool|Authenticatable|null
     {
         if (! auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Invalid login credentials'], 404);
+            return false;
         }
 
         return auth()->user();
