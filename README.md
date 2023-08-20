@@ -61,6 +61,7 @@ Start the Laravel Herd desktop application (which runs largely in the top bar - 
 ```sh
 herd link # OR valet link if you're using Valet
 ``` 
+
 This will allow the server to be served up at the local url `http://instajam-api.test`. (or something
 similar based on the folder name chosen when cloning the repo).  You should add this to your `.env` file
 
@@ -69,12 +70,15 @@ APP_URL=http://instajam-api.test
 ```
 
 Finally you can run:
+
 ```sh
 php artisan telescope:install
 php artisan migrate
 php artisan storage:link
 ``` 
-You may also need to manually create a `photos` directory inside `/storage/app/public`
+
+You may also need to manually create a `photos` directory inside `storage/app/public`
+
 ```sh
 cd storage/app/public
 mkdir photos
@@ -84,11 +88,33 @@ To verify that the server is up and running, you should be able to visit `http:/
 browser and see the telescope interface running.  If you do, you should be ready to go.
 
 ### However...
-If you plan to test the app on android, you will need to take an additional step, which is to create a tunnel
-using Expose or Ngrok make the server available over the internet.  This is because, android is completely isolated from
+If you plan to test the app on Android, you will need to take an additional step, which is to create a tunnel
+using Expose or Ngrok make the server available over the internet.  
+
+**NOTE: THIS ONLY NEEDS TO BE SETUP IF TESTING ON ANDROID. iOS TESTING DOES NOT REQUIRE THIS**
+
+This is because, Android is completely isolated from
 the host system - meaning, the only connection it can make to the localhost server is by using the IP 10.0.2.2.  
-But because the server is not running on localhost (unless you are using Sail), you will need to tunnel out, and 
-use Expose/Ngrok's HTTPS (NOT HTTP) url as the API_URL in the React Native app's `.env` file. 
+But because the server is not running on localhost (unless you are using Laravel Sail), you will need to tunnel out, and 
+use Expose/Ngrok's **HTTPS** (NOT HTTP) url as the `API_URL` in the React Native app's `.env` file.
+
+In this instance, I used Expose.  To create the tunnel go to https://expose.dev/register and register for an account if you don't have one already.  When signed in, it will present a list of steps.  Just copy the token from Step 2, and  open up Herd's settings in the Herd topbar menu. 
+
+In the "Expose" section, paste the token in the text input and close the settings window.
+
+Then, take the command listed in Step 4:
+
+```sh
+expose share http://localhost --subdomain=yourusername
+```
+
+And customise it to the address you use locally e.g.
+
+```sh
+expose share http://instajam-api.test --subdomain=yourusername
+```
+
+If configured correctly it will give out public links to be used.  Copy the HTTPS one and paste it into the React Native app's `.env` file.
 
 
 ## Known Issues
