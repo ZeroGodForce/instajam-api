@@ -22,13 +22,18 @@ directly) as there are no special modifications to be made to allow the applicat
 If you're on Linux, you'll probably know what to do.  If you're on Windows, Sail is your best bet as I hear docker is 
 pretty decent on Windows these days.  Haven't tried it directly.
 
-Firstly, clone the repo, when done.  Open up the terminal, navigate inside and type the following
+Firstly, clone the repo, when done.  Open up the terminal, navigate inside and type the following to install the framework.
 
 ```sh
 composer install
 ```
 
-To install the framework, Once this has finished, duplicate the `.env.example` file - renaming it `.env`.
+Once this has finished, duplicate the `.env.example` file - renaming it `.env`.
+
+```sh
+cp .env.example .env
+```
+
 Next, to set up the database file navigate to the database directory and create a new sqlite database
 
 ```sh
@@ -42,15 +47,16 @@ Inside the `.env`, set the `DB_DATABASE` path to be the absolute path to the SQL
 DB_DATABASE=/absolute/path/to/instajam-api/database/database.sqlite
 ```
 
-Next run: 
+Back in the root directory, set up Laravel's security key: 
 
 ```sh
 php artisan key:generate
 ``` 
 
-to ensure the Laravel security key is set.
 
-NOTE: Some steps may differ from here on in if you are not using Herd or Valet.
+**NOTE: Some steps may differ from here on in if you are not using Herd or Valet.**
+
+Start the Laravel Herd desktop application (which runs largely in the top bar - it's the big **H** icon).  In the root directory run:
 
 ```sh
 herd link # OR valet link if you're using Valet
@@ -64,13 +70,13 @@ APP_URL=http://instajam-api.test
 
 Finally you can run:
 ```sh
-php artisan migrate
 php artisan telescope:install
+php artisan migrate
 php artisan storage:link
 ``` 
 You may also need to manually create a `photos` directory inside `/storage/app/public`
 ```sh
-cd /storage/app/public
+cd storage/app/public
 mkdir photos
 ``` 
 
